@@ -68,12 +68,10 @@ class Mcgyver:
         tube = False
         ether = False
 
-
-	def move(self, direction):
-		"""Move McGyver"""
-
+    def move(self, direction):
+	"""Move McGyver"""
 		# Right move
-		if direction == 'right':
+        if direction == 'right':
 			# To stay in the board
 			if self.case_x < (number_sprite - 1):
 				# Verify that the destination case is not a wall
@@ -84,21 +82,21 @@ class Mcgyver:
 					self.x = self.case_x * sprite_size
 
 		# left move
-		if direction == 'left':
+        if direction == 'left':
 			if self.case_x > 0:
 				if self.level.structure[self.case_y][self.case_x-1] != 'm':
 					self.case_x -= 1
 					self.x = self.case_x * sprite_size
 
 		# up move
-		if direction == 'up':
+        if direction == 'up':
 			if self.case_y > 0:
 				if self.level.structure[self.case_y-1][self.case_x] != 'm':
 					self.case_y -= 1
 					self.y = self.case_y * sprite_size
 
 		# down move
-		if direction == 'down':
+        if direction == 'down':
 			if self.case_y < (number_sprite - 1):
 				if self.level.structure[self.case_y+1][self.case_x] != 'm':
 					self.case_y += 1
