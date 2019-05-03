@@ -46,13 +46,13 @@ class Board:
 				x = case_nb * sprite_size
 				y = line_nb * sprite_size
 				if sprite == 'm':		   #m = wall
-					board.blit(wall, (x,y))
+					window.blit(wall, (x,y))
 				elif sprite == 'd':		   #d = Start
-					board.blit(mcgyver, (x,y))
+					window.blit(mcgyver, (x,y))
 				elif sprite == 'g':		   #g = guardian
-					board.blit(guardian, (x,y))
-				num_case += 1
-			num_ligne += 1
+					window.blit(guardian, (x,y))
+				case_nb += 1
+			line_nb += 1
 
 class Mcgyver:
     """Class for the creation of McGyver"""
