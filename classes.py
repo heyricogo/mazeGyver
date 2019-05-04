@@ -69,8 +69,8 @@ class Mcgyver:
         ether = False
 
     def move(self, direction):
-	"""Move McGyver"""
-		# Right move
+        """Move McGyver"""
+        # Right move
         if direction == 'right':
 			# To stay in the board
 			if self.case_x < (number_sprite - 1):
