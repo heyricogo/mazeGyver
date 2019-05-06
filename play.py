@@ -43,9 +43,7 @@ while loop:
             loop = 0                                                               # Stop loop
         # McGyver Move
         elif event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
-                loop = 0
-            elif event.key == K_RIGHT:
+            if event.key == K_RIGHT:
                 mcgyver.move('right')
             elif event.key == K_LEFT:
                 mcgyver.move('left')
@@ -54,10 +52,11 @@ while loop:
             elif event.key == K_DOWN:
                 mcgyver.move('down')
 
-    # New position
-    window.blit(background, (0,0))
-    board.show(window)
-    pygame.display.flip()
+        # New position
+        window.blit(background, (0,0))
+        board.show(window)
+        window.blit(mcgyver.image, (mcgyver.x, mcgyver.y))
+        pygame.display.flip()
 
 # Victoiry
 if board.structure[mcgyver.case_y][mcgyver.case_x] == 'g':

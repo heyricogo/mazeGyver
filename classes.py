@@ -47,8 +47,6 @@ class Board:
 				y = line_nb * sprite_size
 				if sprite == 'm':		   #m = wall
 					window.blit(wall, (x,y))
-				elif sprite == 'd':		   #d = Start
-					window.blit(mcgyver, (x,y))
 				elif sprite == 'g':		   #g = guardian
 					window.blit(guardian, (x,y))
 				case_nb += 1
