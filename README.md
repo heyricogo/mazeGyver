@@ -1,7 +1,7 @@
 # mazeGyver
 Petit jeu de labyrinthe 2D dans lequel MacGyver doit s'évader. 
 
-# mygiver moves don't works
 # take another image for the wall
+I modified in the commit for the mcGyver move the images sizes... minus 30px for all. 
 # 3 objects to collect
 # winning strategy
