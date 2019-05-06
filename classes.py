@@ -1,14 +1,17 @@
 """Game classes for the MazeGyver game"""
 
 import pygame
+import random
+import json
 from pygame.locals import *
 from constants import *
 
 class Board:
     """Classe for the creation of the boardgame"""
     def __init__(self, file):
-		self.file = file
-		self.structure = 0
+        self.file = file
+        self.structure = 0
+        self.objects_position_list = [(0,0)]
 
     def generate(self):
 		"""Methode to generate the boardgame"""
@@ -33,9 +36,6 @@ class Board:
         wall = pygame.image.load(wall_image).convert_alpha()
         mcgyver = pygame.image.load(mcgyver_image).convert_alpha()
         guardian = pygame.image.load(guardian_image).convert_alpha()
-        needle = pygame.image.load(needle_image).convert_alpha()
-    	tube = pygame.image.load(tube_image).convert_alpha()
-        ether = pygame.image.load(ether_image).convert_alpha()
 
         # Go throught the boardgame list
         line_nb = 0
@@ -54,8 +54,8 @@ class Board:
 
 class Mcgyver:
     """Class for the creation of McGyver"""
-    def __init__(self, level):
-        self.level = level
+    def __init__(self, board):
+        self.board = board
         self.image = pygame.image.load(mcgyver_image).convert_alpha()
         self.case_x = 0
         self.case_y = 0
@@ -73,7 +73,7 @@ class Mcgyver:
 			# To stay in the board
 			if self.case_x < (number_sprite - 1):
 				# Verify that the destination case is not a wall
-				if self.level.structure[self.case_y][self.case_x+1] != 'm':
+				if self.board.structure[self.case_y][self.case_x+1] != 'm':
 					# Move to the case
 					self.case_x += 1
 					# Calculate the real position in pixels
@@ -82,20 +82,55 @@ class Mcgyver:
 		# left move
         if direction == 'left':
 			if self.case_x > 0:
-				if self.level.structure[self.case_y][self.case_x-1] != 'm':
+				if self.board.structure[self.case_y][self.case_x-1] != 'm':
 					self.case_x -= 1
 					self.x = self.case_x * sprite_size
 
 		# up move
         if direction == 'up':
 			if self.case_y > 0:
-				if self.level.structure[self.case_y-1][self.case_x] != 'm':
+				if self.board.structure[self.case_y-1][self.case_x] != 'm':
 					self.case_y -= 1
 					self.y = self.case_y * sprite_size
 
 		# down move
         if direction == 'down':
 			if self.case_y < (number_sprite - 1):
-				if self.level.structure[self.case_y+1][self.case_x] != 'm':
+				if self.board.structure[self.case_y+1][self.case_x] != 'm':
 					self.case_y += 1
 					self.y = self.case_y * sprite_size
+
+######   # methode to take object
+
+class Object:
+    """Class for the creation of objects"""
+    def __init__(self, board, image):
+        self.board = board
+        self.image = pygame.image.load(image).convert_alpha()
+        self.case_x = 0
+        self.case_y = 0
+        self.x = 0
+        self.y = 0
+
+    def generate(self, board):
+        """"Chose a random position for an object"""
+        position_objet = False
+        # Return 2 random numbers for line and case in the board
+        while (position_objet != True):
+            line_nb = random.randint(0,14)
+            case_nb = random.randint(0,14)
+            # Verify that it is a good place for the object
+            if board.structure[case_nb][line_nb] == '0':
+                for tuple in board.objects_position_list:
+                    if tuple != (case_nb,line_nb) and position_objet == False:
+                        self.case_x = case_nb
+                        self.case_y = line_nb
+                        self.x = self.case_x * sprite_size
+                        self.y = self.case_y * sprite_size
+                        board.objects_position_list.append((self.case_x, self.case_y))
+                        position_objet = True
+
+    def show(self, window):
+        # show object on the window 
+        image = self.image
+        window.blit(image, (self.x,self.y))

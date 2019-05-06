@@ -29,6 +29,17 @@ board.show(window)
 # Generate McGyver
 mcgyver = Mcgyver(board)
 
+# Generate the 3 Objects
+needle = Object(board, needle_image)
+tube = Object(board, tube_image)
+ether = Object(board, ether_image)
+needle.generate(board)
+tube.generate(board)
+ether.generate(board)
+needle.show(window)
+tube.show(window)
+ether.show(window)
+
 # Refesh window
 pygame.display.flip()
 
@@ -58,6 +69,6 @@ while loop:
         window.blit(mcgyver.image, (mcgyver.x, mcgyver.y))
         pygame.display.flip()
 
-# Victoiry
+# Victory
 if board.structure[mcgyver.case_y][mcgyver.case_x] == 'g':
     loop = 0
