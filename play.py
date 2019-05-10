@@ -18,8 +18,9 @@ pygame.display.set_icon(icon)
 pygame.display.set_caption(window_title)
 
 # Load background image
-background = pygame.image.load(background_image).convert()
-window.blit(background, (0,0))
+# background = pygame.image.load(background_image).convert()
+window.fill((0,0,0))
+# window.blit(background, (0,0))
 
 # Genarate the boardgame
 board = Board('n1')
@@ -64,7 +65,8 @@ while loop:
                 mcgyver.move('down')
 
         # New position
-        window.blit(background, (0,0))
+        # window.blit(background, (0,0))
+        window.fill((0,0,0))
         board.show(window)
         window.blit(mcgyver.image, (mcgyver.x, mcgyver.y))
         # condition pour ne pas afficher si item collecté par MacGyver

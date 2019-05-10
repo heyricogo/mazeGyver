@@ -118,18 +118,12 @@ class Mcgyver:
                 if key == 'needle':
                     self.needle = True
                     self.board.items_position_list['n'] = 1
-                    print(self.needle, self.board.items_position_list)
                 if key == 'tube':
                     self.tube = True
                     self.board.items_position_list['t'] = 1
-                    print(self.tube, self.board.items_position_list)
                 if key == 'ether':
                     self.ether = True
                     self.board.items_position_list['e'] = 1
-                    print(self.ether, self.board.items_position_list)
-        print(self.board.items_position_list)
-    # if même x,y que item, item = True
-    # liste d'item ajout lorsque McGyver passe dessus s'ajoute à la liste
 
 
 class Item:
@@ -167,7 +161,6 @@ class Item:
 
     def show(self, window):
         # show object on the window
-        # image = self.image
         if self.image_name == needle_image:
             if self.board.items_position_list['n'] == 0:
                 image = pygame.image.load(needle_image).convert()
