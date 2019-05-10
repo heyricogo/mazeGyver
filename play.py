@@ -30,9 +30,9 @@ board.show(window)
 mcgyver = Mcgyver(board)
 
 # Generate the 3 Objects
-needle = Object(board, needle_image)
-tube = Object(board, tube_image)
-ether = Object(board, ether_image)
+needle = Item(board, needle_image)
+tube = Item(board, tube_image)
+ether = Item(board, ether_image)
 needle.generate(board)
 tube.generate(board)
 ether.generate(board)
@@ -67,8 +67,16 @@ while loop:
         window.blit(background, (0,0))
         board.show(window)
         window.blit(mcgyver.image, (mcgyver.x, mcgyver.y))
+        # condition pour ne pas afficher si item collecté par MacGyver
+        needle.show(window)
+        tube.show(window)
+        ether.show(window)
         pygame.display.flip()
 
-# Victory
-if board.structure[mcgyver.case_y][mcgyver.case_x] == 'g':
-    loop = 0
+    # Victory
+    if board.structure[mcgyver.case_y][mcgyver.case_x] == 'g':
+        if mcgyver.needle == True and mcgyver.tube == True and mcgyver.ether == True:
+            print('You win')
+            loop = 0
+        else: 
+            print('you loose')
