@@ -18,7 +18,6 @@ pygame.display.set_icon(icon)
 pygame.display.set_caption(window_title)
 
 # Load background image
-# background = pygame.image.load(background_image).convert()
 window.fill((0,0,0))
 # window.blit(background, (0,0))
 
@@ -31,9 +30,9 @@ board.show(window)
 mcgyver = Mcgyver(board)
 
 # Generate the 3 Objects
-tube = Item(board, tube_image)
-needle = Item(board, needle_image)
-ether = Item(board, ether_image)
+tube = Item(board, tube_image, 'tube')
+needle = Item(board, needle_image, 'needle')
+ether = Item(board, ether_image, 'ether')
 tube.generate(board)
 needle.generate(board)
 ether.generate(board)
@@ -50,9 +49,9 @@ pygame.key.set_repeat(400,30)
 # Game loop
 loop = 1
 while loop:
-    for event in pygame.event.get():                                                    # We go through the list of all the events received
+    for event in pygame.event.get(): # We go through the list of all the events received
         if event.type == QUIT:       # If any of these events are of type QUIT
-            loop = 0                                                               # Stop loop
+            loop = 0                 # Stop loop
         # McGyver Move
         elif event.type == KEYDOWN:
             if event.key == K_RIGHT:
@@ -65,7 +64,6 @@ while loop:
                 mcgyver.move('down')
 
         # New position
-        # window.blit(background, (0,0))
         window.fill((0,0,0))
         board.show(window)
         window.blit(mcgyver.image, (mcgyver.x, mcgyver.y))
@@ -76,9 +74,16 @@ while loop:
         pygame.display.flip()
 
     # Victory
+    game_over = pygame.image.load(game_over_image).convert()
+    win = pygame.image.load(win_image).convert()
     if board.structure[mcgyver.case_y][mcgyver.case_x] == 'g':
         if mcgyver.needle == True and mcgyver.tube == True and mcgyver.ether == True:
+            window.blit(win, (0,0))
+            pygame.display.flip()
             print('You win')
             loop = 0
         else: 
+            window.blit(game_over, (0,0))
+            pygame.display.flip()
+            loop = 0
             print('you loose')

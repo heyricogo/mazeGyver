@@ -16,7 +16,7 @@ class Board:
     def __init__(self, file):
         self.file = file
         self.structure = 0
-        self.items_position_list = {'needle': (0, 0), 'tube': (0, 0), 'ether': (0, 0)}
+        self.items_position_list = {'start':(0,0)}
         self.items_taken_list = {'n':0, 't':0, 'e':0}
 
     def generate(self):
@@ -55,7 +55,7 @@ class Board:
                     window.blit(wall, (x, y))
                 elif sprite == 'g':  # g = guardian
                     window.blit(guardian, (x, y))
-                elif sprite == 's': # s = start
+                elif sprite == 's' or sprite =='e': # s = start or e = end
                     window.blit(start, (x,y))
                 case_nb += 1
             line_nb += 1
@@ -137,11 +137,11 @@ class Mcgyver:
 class Item:
     """Class for the creation of objects"""
 
-    def __init__(self, board, image):
+    def __init__(self, board, image, name):
         self.board = board
-        self.image = pygame.image.load(image).convert()
+        self.image = pygame.image.load(image).convert_alpha()
         self.image_name = image
-        # self.image = image
+        self.name = name
         self.case_x = 0
         self.case_y = 0
         self.x = 0
@@ -166,8 +166,8 @@ class Item:
                             self.case_y = case_nb
                             self.x = self.case_x * sprite_size
                             self.y = self.case_y * sprite_size
-                            board.items_position_list[key] = (line_nb, case_nb)
                             position_item = True
+                board.items_position_list[self.name] = (line_nb, case_nb)
 
     def show(self, window):
         # show object on the window

@@ -11,6 +11,8 @@ icon_image = "images/MacGyver.png"
 
 # Game images list
 background_image = "images/background.jpg"
+game_over_image = "images/game_over.jpg"
+win_image = "images/win.jpg"
 wall_image = "images/wall.png"
 mcgyver_image = "images/MacGyver.png"
 guardian_image = "images/Gardien.png"
