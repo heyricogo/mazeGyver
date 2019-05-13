@@ -31,11 +31,11 @@ board.show(window)
 mcgyver = Mcgyver(board)
 
 # Generate the 3 Objects
-needle = Item(board, needle_image)
 tube = Item(board, tube_image)
+needle = Item(board, needle_image)
 ether = Item(board, ether_image)
-needle.generate(board)
 tube.generate(board)
+needle.generate(board)
 ether.generate(board)
 needle.show(window)
 tube.show(window)

@@ -16,8 +16,8 @@ class Board:
     def __init__(self, file):
         self.file = file
         self.structure = 0
-        self.items_position_list = {'needle': (
-            0, 0), 'tube': (0, 0), 'ether': (0, 0), 'n':0, 't':0,'e':0}
+        self.items_position_list = {'needle': (0, 0), 'tube': (0, 0), 'ether': (0, 0)}
+        self.items_taken_list = {'n':0, 't':0, 'e':0}
 
     def generate(self):
         """Methode to generate the boardgame"""
@@ -41,6 +41,7 @@ class Board:
         # Load images
         wall = pygame.image.load(wall_image).convert_alpha()
         guardian = pygame.image.load(guardian_image).convert_alpha()
+        start = pygame.image.load(start_image).convert_alpha()
 
         # Go throught the boardgame list
         line_nb = 0
@@ -54,6 +55,8 @@ class Board:
                     window.blit(wall, (x, y))
                 elif sprite == 'g':  # g = guardian
                     window.blit(guardian, (x, y))
+                elif sprite == 's': # s = start
+                    window.blit(start, (x,y))
                 case_nb += 1
             line_nb += 1
 
@@ -106,34 +109,39 @@ class Mcgyver:
                 if self.board.structure[self.case_y+1][self.case_x] != 'm':
                     self.case_y += 1
                     self.y = self.case_y * sprite_size
-        
+
         self.item_taken()
-        
+
         # variable dans dict pour dire que item pris ou pas
 
     # methode to verify if McGyver takes an item
     def item_taken(self):
         for key, value in self.board.items_position_list.items():
             if value == (self.case_x, self.case_y):
+                print(self.case_x, self.case_y)
+                print(self.board.items_position_list)
                 if key == 'needle':
                     self.needle = True
-                    self.board.items_position_list['n'] = 1
+                    self.board.items_taken_list['n'] = 1
+                    print(self.board.items_taken_list)
                 if key == 'tube':
                     self.tube = True
-                    self.board.items_position_list['t'] = 1
+                    self.board.items_taken_list['t'] = 1
+                    print(self.board.items_taken_list)
                 if key == 'ether':
                     self.ether = True
-                    self.board.items_position_list['e'] = 1
-
+                    self.board.items_taken_list['e'] = 1
+                    print(self.board.items_taken_list)
+        
 
 class Item:
     """Class for the creation of objects"""
 
     def __init__(self, board, image):
         self.board = board
-        # self.image = pygame.image.load(image).convert()
+        self.image = pygame.image.load(image).convert()
         self.image_name = image
-        self.image = image
+        # self.image = image
         self.case_x = 0
         self.case_y = 0
         self.x = 0
@@ -143,6 +151,9 @@ class Item:
         """"Chose a random position for an object"""
         position_item = False
         # Return 2 random numbers for line and case in the board
+
+        # for line in board.structure:
+
         while (position_item != True):
             case_nb = random.randint(0, 14)
             line_nb = random.randint(0, 14)
@@ -150,26 +161,22 @@ class Item:
             if board.structure[case_nb][line_nb] == '0':
                 for key, value in board.items_position_list.items():
                     if value == (0, 0):
-                        if value != (case_nb, line_nb) and position_item == False:
-                            # board.structure[case_nb][line_nb] == 'i'
-                            self.case_x = case_nb
-                            self.case_y = line_nb
+                        if value != (line_nb, case_nb) and position_item == False:
+                            self.case_x = line_nb
+                            self.case_y = case_nb
                             self.x = self.case_x * sprite_size
                             self.y = self.case_y * sprite_size
-                            board.items_position_list[key] = (case_nb, line_nb)
+                            board.items_position_list[key] = (line_nb, case_nb)
                             position_item = True
 
     def show(self, window):
         # show object on the window
         if self.image_name == needle_image:
-            if self.board.items_position_list['n'] == 0:
-                image = pygame.image.load(needle_image).convert()
-                window.blit(image, (self.x, self.y))
+            if self.board.items_taken_list['n'] == 0:
+                window.blit(self.image, (self.x, self.y))
         if self.image_name == tube_image:
-            if self.board.items_position_list['t'] == 0:
-                image = pygame.image.load(tube_image).convert()
-                window.blit(image, (self.x, self.y))
+            if self.board.items_taken_list['t'] == 0:
+                window.blit(self.image, (self.x, self.y))
         if self.image_name == ether_image:
-            if self.board.items_position_list['e'] == 0:
-                image = pygame.image.load(ether_image).convert()
-                window.blit(image, (self.x, self.y))
+            if self.board.items_taken_list['e'] == 0:
+                window.blit(self.image, (self.x, self.y))
